@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Lista de Tareas ToDo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Tareas ToDo</h1>
+        <div class="input-group">
+            <input type="text" id="todo-input" placeholder="Añadir nueva tarea...">
+            <button onclick="addTodo()">Añadir</button>
+        </div>
+
+        <ul id="todo-list">
+            {# Los todos se renderizarán aquí por JavaScript #}
+            {% for todo in todos %}
+            <li data-id="{{ todo.id }}" class="{{ 'completed' if todo.completed else '' }}">
+                <span class="task-text">{{ todo.task }}</span>
+                <div class="actions">
+<button class="complete-btn" onclick="toggleComplete({{ todo.id }})">
+    {% if todo.completed %}✔️{% else %}✔️{% endif %}
+</button>
+                    <button class="delete-btn" onclick="deleteTodo({{ todo.id }})">Eliminar</button>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
